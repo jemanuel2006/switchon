@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="isNewSwitch">
+      New Switch
+    </ion-title>
+    <ion-title *ngIf="!isNewSwitch">
+      Edit Switch
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <form (ngSubmit)="onSave()" [formGroup]="validateSwitch">
+            <ion-item>
+                <ion-label floating>* Switch Name</ion-label>
+                <ion-input type="text" formControlName="name" value="{{currentSwitch.name}}" [(ngModel)]="currentSwitch.name" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>* Turn On Command</ion-label>
+                <ion-input type="text" formControlName="turnOnMessage" value="{{currentSwitch.turnOnMessage}}" [(ngModel)]="currentSwitch.turnOnMessage" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>* Turn Off Command</ion-label>
+                <ion-input type="text" formControlName="turnOffMessage" value="{{currentSwitch.turnOffMessage}}" [(ngModel)]="currentSwitch.turnOffMessage" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>* Telephone</ion-label>
+                <ion-input type="text" formControlName="telephone" value="{{currentSwitch.telephone}}" [(ngModel)]="currentSwitch.telephone" required></ion-input>
+            </ion-item>
+            <button ion-button block color="secondary" type="submit" [disabled]="!validateSwitch.valid">Save Switch</button>
+        </form>
+    </ion-list>
+</ion-content>

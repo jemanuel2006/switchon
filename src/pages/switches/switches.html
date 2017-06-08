@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Switches</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+  <ion-list>
+    <ion-item-sliding *ngFor="let sw of switches">
+      <ion-item>
+        {{sw.name}}
+        <ion-icon name="power" [color]="sw.isOn?'secondary':'dark'"></ion-icon>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="default" (click)="onSelectSwitch(sw)">
+          Edit
+        </button>
+        <button ion-button color="secondary" (click)="onTurnOnSwitch(sw)">
+          Turn On
+        </button>
+        <button ion-button color="dark" (click)="onTurnOffSwitch(sw)">
+          Turn Off
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <button ion-button block color="secondary" (click)="onSelectNewSwitch()">Create New Switch</button>
+</ion-content>
