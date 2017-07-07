@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Switch } from './../../models/switch';
 import { SwitchService } from './../../services/switch-service';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
-
+import { LoadingController } from 'ionic-angular';
 import { UUID } from 'angular2-uuid';
 
 @Component({
@@ -17,7 +17,7 @@ export class NewSwitchPage {
     validateSwitch: FormGroup;
 
     constructor(public navCtrl: NavController, public navParam: NavParams, private swService: SwitchService,
-            private formBuilder: FormBuilder) {
+            private formBuilder: FormBuilder, public loadingCtrl: LoadingController) {
         let sw = navParam.get('selectedSwitch');
         this.isNewSwitch = sw == null;
         
@@ -36,14 +36,19 @@ export class NewSwitchPage {
     }
 
     onSave(form){
-        console.log(this.validateSwitch.value);
+        let loader = this.loadingCtrl.create({
+            content: "Creating switch, please wait..."
+        });
+        loader.present();
+
         this.currentSwitch.name = this.validateSwitch.value.name;
-        this.currentSwitch.name = this.validateSwitch.value.turnOnMessage;
-        this.currentSwitch.name = this.validateSwitch.value.turnOffMessage;
+        this.currentSwitch.turnOnMessage = this.validateSwitch.value.turnOnMessage;
+        this.currentSwitch.turnOffMessage = this.validateSwitch.value.turnOffMessage;
         this.currentSwitch.telephone = this.validateSwitch.value.telephone;
 
-        this.swService.saveOrUpdateSwitch(this.currentSwitch);
-
-        this.navCtrl.pop();
+        this.swService.saveOrUpdateSwitch(this.currentSwitch).then(() =>{
+            loader.dismiss();
+            this.navCtrl.pop();
+        });
     }
 }

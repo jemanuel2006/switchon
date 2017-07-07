@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="isNewTrigger">
+      New Trigger
+    </ion-title>
+    <ion-title *ngIf="!isNewTrigger">
+      Edit Trigger
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <form (ngSubmit)="onSave()" [formGroup]="validateTrigger">
+            <ion-item>
+                <ion-label floating>* Trigger Name</ion-label>
+                <ion-input type="text" name="name" formControlName="name" value="{{currentTrigger.name}}" [(ngModel)]="currentTrigger.name" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>* Repeat Every (Interval Number) </ion-label>
+                <ion-input type="number" name="frequency" formControlName="frequency" value="{{currentTrigger.frequency}}" [(ngModel)]="currentTrigger.frequency" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>* Repeat Interval Type </ion-label>
+                <ion-select name="type" [(ngModel)]="currentTrigger.type" formControlName="type" required>
+                    <ion-option value="1">Hours</ion-option>
+                    <ion-option value="2">Days</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>* Time</ion-label>
+                <ion-datetime name="time" displayFormat="HH:mm" [(ngModel)]="currentTrigger.time" formControlName="time"></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>* Associated Switch</ion-label>
+                <ion-select name="switch" [(ngModel)]="currentTrigger.switch" formControlName="switch">
+                    <ion-option *ngFor="let sw of switches" [value]="sw">{{sw.name}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <button ion-button block color="secondary" type="submit" [disabled]="!validateTrigger.valid">Save Trigger</button>
+        </form>
+    </ion-list>
+</ion-content>

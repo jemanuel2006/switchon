@@ -1,11 +1,24 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      About
-    </ion-title>
+    <ion-title>Trigers</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content >
+  <ion-list>
+    <ion-item-sliding *ngFor="let tr of triggers">
+      <ion-item>
+        {{tr.name}}
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="default" (click)="onSelectTrigger(tr)">
+          Edit
+        </button>
+        <button ion-button color="danger" (click)="onDeleteTrigger(tr)">
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <button ion-button block color="secondary" (click)="onSelectNewTrigger()">Create New Trigger</button>
 </ion-content>
